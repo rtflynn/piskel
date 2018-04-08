@@ -263,6 +263,8 @@
   "js/worker/hash/Hash.js",
   "js/worker/imageprocessor/ImageProcessorWorker.js",
   "js/worker/imageprocessor/ImageProcessor.js",
+  "js/worker/mapcolors/MapColorsWorker.js",
+  "js/worker/mapcolors/MapColors.js",
 
   // Application controller and initialization
   "js/app.js",

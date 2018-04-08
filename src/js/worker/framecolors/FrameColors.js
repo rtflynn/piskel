@@ -1,8 +1,9 @@
 (function () {
   var ns = $.namespace('pskl.worker.framecolors');
 
-  ns.FrameColors = function (frame, onSuccess, onStep, onError) {
+  ns.FrameColors = function (frame, maxColors, onSuccess, onStep, onError) {
     this.pixels = frame.pixels;
+    this.maxColors = maxColors;
 
     this.onStep = onStep;
     this.onSuccess = onSuccess;
@@ -15,7 +16,7 @@
   ns.FrameColors.prototype.process = function () {
     this.worker.postMessage([
       pskl.utils.colorToInt(Constants.TRANSPARENT_COLOR),
-      Constants.MAX_WORKER_COLORS, this.pixels
+      this.maxColors, this.pixels
     ]);
   };
 

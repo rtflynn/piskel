@@ -116,7 +116,7 @@
   };
 
   ns.CurrentColorsService.prototype.getFrameColors_ = function (frame, processorCallback) {
-    var frameColorsWorker = new pskl.worker.framecolors.FrameColors(frame,
+    var frameColorsWorker = new pskl.worker.framecolors.FrameColors(frame, Constants.MAX_WORKER_COLORS,
       function (event) {
         processorCallback(event.data.colors);
       },
