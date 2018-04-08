@@ -3,13 +3,13 @@
 }
 
 .transformations-container .tool-icon {
-  margin: 0 0 5px 0;
+  margin: 0;
 }
 
 .transformations-container .tools-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 4px;
   height: 46px;
 
   /* Override the float:left set on tools-wrapper in layout.css; */
@@ -18,8 +18,6 @@
 
 .transformations-container.show-more .tools-wrapper {
   height: auto;
-  /* Compensate the 5px bottom-margin coming from the tool-icon */
-  margin-bottom: -5px;
 }
 
 .transformations-show-more-link {
