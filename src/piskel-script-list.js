@@ -158,6 +158,7 @@
   "js/controller/dialogs/importwizard/steps/InsertLocation.js",
   "js/controller/dialogs/importwizard/steps/SelectMode.js",
   "js/controller/dialogs/importwizard/ImportWizard.js",
+  "js/controller/dialogs/recolor/RecolorDialogController.js",
   "js/controller/dialogs/PerformanceInfoController.js",
   "js/controller/dialogs/UnsupportedBrowserController.js",
 
@@ -240,6 +241,7 @@
   "js/tools/transform/Clone.js",
   "js/tools/transform/Crop.js",
   "js/tools/transform/Flip.js",
+  "js/tools/transform/Recolor.js",
   "js/tools/transform/Rotate.js",
   "js/tools/transform/TransformUtils.js",
 

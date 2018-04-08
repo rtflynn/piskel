@@ -9,6 +9,7 @@
       new pskl.tools.transform.Clone(),
       new pskl.tools.transform.Center(),
       new pskl.tools.transform.Crop(),
+      new pskl.tools.transform.Recolor(),
     ];
 
     this.toolIconBuilder = new pskl.tools.ToolIconBuilder();
