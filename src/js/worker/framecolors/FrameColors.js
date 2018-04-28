@@ -1,13 +1,23 @@
 (function () {
   var ns = $.namespace('pskl.worker.framecolors');
 
-  ns.FrameColors = function (frame, maxColors, onSuccess, onStep, onError) {
-    this.pixels = frame.pixels;
-    this.maxColors = maxColors;
+  /**
+   * Worker processor helper. FrameColors worker will extract all the colors
+   * contained in the provided frame and will return it as an object in
+   * event.data.colors.
+   *
+   * @param {Object} args
+   *        - {Frame} frame
+   *        - {Number} maxColors
+   * @param {Object} callbacks: onSuccess, onStep, onError
+   */
+  ns.FrameColors = function (args, callbacks) {
+    this.pixels = args.frame.pixels;
+    this.maxColors = args.maxColors;
 
-    this.onStep = onStep;
-    this.onSuccess = onSuccess;
-    this.onError = onError;
+    this.onStep = callbacks.onStep || Constants.EMPTY_FUNCTION;
+    this.onSuccess = callbacks.onSuccess || Constants.EMPTY_FUNCTION;
+    this.onError = callbacks.onError || Constants.EMPTY_FUNCTION;
 
     this.worker = pskl.utils.WorkerUtils.createWorker(ns.FrameColorsWorker, 'frame-colors');
     this.worker.onmessage = this.onWorkerMessage.bind(this);

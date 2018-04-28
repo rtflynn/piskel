@@ -19,7 +19,7 @@
       try {
         var data = event.data;
 
-        var pixels = mapPixels(data.pixels, data.colormap);
+        var pixels = mapPixels(data.pixels, data.colorMap);
 
         this.postMessage({
           type : 'SUCCESS',

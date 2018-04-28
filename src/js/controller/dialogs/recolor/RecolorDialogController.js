@@ -1,5 +1,6 @@
 (function () {
   var ns = $.namespace('pskl.controller.dialogs.recolor');
+  var ONE_MILLION = 1000000;
 
   ns.RecolorDialogController = function (piskelController) {};
 
@@ -12,16 +13,16 @@
     bwButton.addEventListener('click', this.onBwButtonClick_.bind(this));
   };
 
-  function simpleWorkerPromise(_Worker, a1, a2) {
+  function simpleWorkerPromise(_Worker, args) {
     var deferred = Q.defer();
-    var onSuccess = function (event) {
-      deferred.resolve(event);
-    };
-    var onStep = function () {};
-    var onError = function (e) {
-      deferred.reject(e);
-    };
-    var worker = new _Worker(a1, a2, onSuccess, onStep, onError);
+    var worker = new _Worker(args, {
+      onSuccess: function (event) {
+        deferred.resolve(event);
+      },
+      onError: function (e) {
+        deferred.reject(e);
+      }
+    });
     worker.process();
 
     return deferred.promise;
@@ -47,7 +48,8 @@
   ns.RecolorDialogController.prototype.getColorsFromAllFrames = function (frames) {
     return batchAll(frames, function (frame) {
       var worker = pskl.worker.framecolors.FrameColors;
-      return simpleWorkerPromise(worker, frame, 1000000).then(function (event) {
+      var args = { frame: frame, maxColors: ONE_MILLION };
+      return simpleWorkerPromise(worker, args).then(function (event) {
         return event.data.colors;
       });
     }).then(function (results) {
@@ -104,14 +106,16 @@
     this.getColorsFromAllFrames(frames).then(function (colors) {
       var paletteId = pskl.UserSettings.get(pskl.UserSettings.SELECTED_PALETTE);
       var palette = pskl.app.paletteService.getPaletteById(paletteId);
-      var colorsMap = this.mapColorsToPalette(colors, palette);
+      var colorMap = this.mapColorsToPalette(colors, palette);
 
       return batchAll(frames, function (frame) {
         var worker = pskl.worker.mapcolors.MapColors;
-        return simpleWorkerPromise(worker, frame.getPixels(), colorsMap)
-          .then(function (event) {
-            frame.setPixels(event.data.pixels);
-          });
+        return simpleWorkerPromise(worker, {
+          pixels: frame.getPixels(),
+          colorMap: colorMap
+        }).then(function (event) {
+          frame.setPixels(event.data.pixels);
+        });
       });
     }.bind(this)).then(function () {
       $.publish(Events.PISKEL_RESET);
