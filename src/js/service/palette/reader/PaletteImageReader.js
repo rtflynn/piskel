@@ -14,10 +14,13 @@
   };
 
   ns.PaletteImageReader.prototype.onImageLoaded_ = function (image) {
-    var imageProcessor = new pskl.worker.imageprocessor.ImageProcessor(image,
-      this.onWorkerSuccess_.bind(this),
-      this.onWorkerStep_.bind(this),
-      this.onWorkerError_.bind(this));
+    var imageProcessor = new pskl.worker.imageprocessor.ImageProcessor({
+      image : image
+    }, {
+      onSuccess: this.onWorkerSuccess_.bind(this),
+      onStep: this.onWorkerStep_.bind(this),
+      onError: this.onWorkerError_.bind(this)
+    });
 
     $.publish(Events.SHOW_PROGRESS, [{'name': 'Processing image colors ...'}]);
 

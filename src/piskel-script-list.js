@@ -259,8 +259,6 @@
   // Workers
   "js/worker/framecolors/FrameColorsWorker.js",
   "js/worker/framecolors/FrameColors.js",
-  "js/worker/hash/HashWorker.js",
-  "js/worker/hash/Hash.js",
   "js/worker/imageprocessor/ImageProcessorWorker.js",
   "js/worker/imageprocessor/ImageProcessor.js",
   "js/worker/mapcolors/MapColorsWorker.js",

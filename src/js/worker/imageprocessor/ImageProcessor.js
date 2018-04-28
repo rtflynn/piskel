@@ -1,12 +1,12 @@
 (function () {
   var ns = $.namespace('pskl.worker.imageprocessor');
 
-  ns.ImageProcessor = function (image, onSuccess, onStep, onError) {
-    this.image = image;
+  ns.ImageProcessor = function (args, callbacks) {
+    this.image = args.image;
 
-    this.onStep = onStep;
-    this.onSuccess = onSuccess;
-    this.onError = onError;
+    this.onStep = callbacks.onStep;
+    this.onSuccess = callbacks.onSuccess;
+    this.onError = callbacks.onError;
 
     this.worker = pskl.utils.WorkerUtils.createWorker(ns.ImageProcessorWorker, 'image-colors-processor');
     this.worker.onmessage = this.onWorkerMessage.bind(this);
